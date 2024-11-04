@@ -19,10 +19,14 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
 
-      - name: Create new branch
+      - name: Create and push new branch
+        env:
+          TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           DATE=$(TZ="America/Toronto" date +'%Y%m%d')
           git checkout -b $DATE
+          git pull origin main  # Pull the latest changes from main branch (or your default branch)
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} $DATE:$DATE
 
       - name: Set branch as default
         env:
