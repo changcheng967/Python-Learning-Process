@@ -19,16 +19,30 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
 
+      - name: Check if branch already exists
+        id: check-branch
+        run: |
+          DATE=$(TZ="America/Toronto" date +'%Y%m%d')
+          if git show-ref --verify --quiet refs/heads/$DATE; then
+            echo "Branch $DATE already exists."
+            echo "::set-output name=exists::true"
+          else
+            echo "Branch $DATE does not exist. Creating branch."
+            echo "::set-output name=exists::false"
+          fi
+
       - name: Create and push new branch
+        if: steps.check-branch.outputs.exists == 'false'
         env:
           TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           DATE=$(TZ="America/Toronto" date +'%Y%m%d')
           git checkout -b $DATE
-          git pull origin main  # Pull the latest changes from the main branch
+          git pull origin main  # Pull the latest changes from main branch (or your default branch)
           git push origin HEAD:$DATE  # Push the current HEAD to the new branch named $DATE
           
       - name: Wait for branch to be available
+        if: steps.check-branch.outputs.exists == 'false'
         run: sleep 10  # Waits 10 seconds to ensure the branch is created
 
       - name: Set branch as default
