@@ -3,6 +3,7 @@ name: Daily Branch Creator
 on:
   schedule:
     - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Adds manual trigger
 
 jobs:
   create-branch:
