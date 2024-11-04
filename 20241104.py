@@ -1,7 +1,1 @@
-def thing():
-    print("hello")
-    print("Helloworld")
-
-    thing()
-    print("Zip")
-    thing()
+# This is a placeholder Python file
