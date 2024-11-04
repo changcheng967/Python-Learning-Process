@@ -43,7 +43,13 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
         with:
-          ref: ${{ needs.create-branch.outputs.DATE }}
+          fetch-depth: 0  # Ensure full history is fetched
+          ref: ${{ needs.create-branch.outputs.DATE }}  # Check out the new branch
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
 
       - name: Create .py file
         run: |
@@ -52,4 +58,3 @@ jobs:
           git add $DATE.py
           git commit -m "Add $DATE.py"
           git push origin HEAD:$DATE
-
