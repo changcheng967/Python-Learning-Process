@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Fetch all history for all branches
 
       - name: Set up Git
         run: |
@@ -23,6 +25,7 @@ jobs:
         run: |
           DATE=$(TZ="America/Toronto" date +'%Y%m%d')
           git checkout -b $DATE
+          git pull origin main  # Pull the latest changes from main branch (or your default branch)
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} $DATE
           
       - name: Wait for branch to be available
