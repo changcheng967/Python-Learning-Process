@@ -18,16 +18,14 @@ jobs:
           git config --global user.email 'github-actions@github.com'
 
       - name: Create new branch
-        env:
-          TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           DATE=$(TZ="America/Toronto" date +'%Y%m%d')
           git checkout -b $DATE
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} $DATE
+          git push origin $DATE
 
       - name: Set branch as default
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           DATE=$(TZ="America/Toronto" date +'%Y%m%d')
           curl -X PATCH \
