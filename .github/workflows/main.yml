@@ -36,7 +36,7 @@ jobs:
             https://api.github.com/repos/${{ github.repository }} \
             -d "{\"default_branch\":\"$DATE\"}"
 
-  create-python-file:
+  create-common-file:
     runs-on: ubuntu-latest
     needs: create-branch
     steps:
@@ -57,4 +57,20 @@ jobs:
           echo "# This is a placeholder Python file" > $DATE.py
           git add $DATE.py
           git commit -m "Add $DATE.py"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:$DATE
+
+      - name: Create .js file
+        run: |
+          DATE=$(TZ="America/Toronto" date +'%Y%m%d')
+          echo "# This is a placeholder Python file" > $DATE.js
+          git add $DATE.js
+          git commit -m "Add $DATE.js"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:$DATE
+
+      - name: Create .bat file
+        run: |
+          DATE=$(TZ="America/Toronto" date +'%Y%m%d')
+          echo "# This is a placeholder Python file" > $DATE.bat
+          git add $DATE.bat
+          git commit -m "Add $DATE.bat"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:$DATE
