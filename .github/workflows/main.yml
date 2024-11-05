@@ -14,8 +14,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name 'DouletMedia'
+          git config --global user.email 'doulet2023@gmail.com'
 
       - name: Create new branch
         env:
@@ -48,8 +48,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name 'DouletMedia'
+          git config --global user.email 'doulet2023@gmail.com'
 
       - name: Create .py file
         run: |
@@ -57,4 +57,4 @@ jobs:
           echo "# This is a placeholder Python file" > $DATE.py
           git add $DATE.py
           git commit -m "Add $DATE.py"
-          git push origin HEAD:$DATE
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:$DATE
